@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class TransactionController extends Controller
 {
     public function index()
     {
         return Transaction::all();
+    }
+
+    public function create() 
+    {
+        $transactions = Transaction::all();
+        return Inertia::render('Transactions/Index', [
+            'transactions' => $transactions,
+        ]);
     }
 
     public function store(Request $request)
