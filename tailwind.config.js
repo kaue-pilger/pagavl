@@ -16,11 +16,12 @@ export default {
             'te-papa-green': '#1B4643',
             'algae-gree': '#7CDDAE',
             'oslo-gray': '#7B8B8F',
+            'black-haze': '#F7F8F8',
             'white': '#FFFFFF'
         },
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Ginka', 'sans-serif'],
             },
         },
     },
