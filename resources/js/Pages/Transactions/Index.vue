@@ -1,37 +1,33 @@
 <script setup>
-import { defineProps } from 'vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import ReadTransactions from './Partials/ReadTransactions.vue';
-import { usePage } from '@inertiajs/vue3';
-import CreateTransaction from './Partials/CreateTransaction.vue';
+  import { defineProps } from 'vue';
+  
+  import { Head } from '@inertiajs/vue3';
+  import { usePage } from '@inertiajs/vue3';
 
-// Definindo as props recebidas
-const props = defineProps({
-    transactions: Array, // Recebendo as transações como props
-});
+  import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+  import ReadTransactions from './Partials/ReadTransactions.vue';
+  import CreateTransaction from './Partials/CreateTransaction.vue';
 
-// Função para editar transação
-function editTransaction(id) {
-    // Usando a Inertia para navegar para a página de edição
-    this.$inertia.get(`/transactions/edit/${id}`);
-}
+  const props = defineProps({
+    transactions: Array,
+  });
 
-// Função para excluir transação
-function deleteTransaction(id) {
-    if (confirm('Você tem certeza que deseja excluir esta transação?')) {
-        // Usando a Inertia para enviar a requisição DELETE
-        this.$inertia.delete(`/transactions/${id}`);
+  function editTransaction(id) {
+    this.$inertia.patch(`api/transactions/${id}`);
+  }
+
+  function deleteTransaction(id) {
+    if (confirm('Are you sure about this action?')) {
+        this.$inertia.delete(`api/transactions/${id}`);
     }
-}
+  }
 </script>
 
 <template>
-    <Head title="Profile" />
+    <Head title="Transactions" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Transactions</h2>
-        </template>
+      <h1 class="text-2xl font-bold">Transactions Area</h1>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">

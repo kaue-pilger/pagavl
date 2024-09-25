@@ -36,6 +36,8 @@ const alignmentClasses = computed(() => {
         return 'ltr:origin-top-left rtl:origin-top-right start-0';
     } else if (props.align === 'right') {
         return 'ltr:origin-top-right rtl:origin-top-left end-0';
+    } else if (props.align === 'bottom') {
+        return 'origin-bottom';
     } else {
         return 'origin-top';
     }
@@ -63,12 +65,12 @@ const open = ref(false);
         >
             <div
                 v-show="open"
-                class="absolute z-50 mt-2 rounded-md shadow-lg"
+                class="absolute bottom-full z-50 mb-2 rounded-xl shadow-lg"
                 :class="[widthClass, alignmentClasses]"
                 style="display: none"
                 @click="open = false"
             >
-                <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
+                <div class="rounded-xl" :class="contentClasses">
                     <slot name="content" />
                 </div>
             </div>
