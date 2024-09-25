@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class TransactionController extends Controller
 {
@@ -32,6 +32,16 @@ class TransactionController extends Controller
     {
         return $transaction;
     }
+
+    public function getTotalsByCurrency()
+    {
+        $totals = Transaction::select('currency', DB::raw('SUM(amount) as total'))
+            ->groupBy('currency')
+            ->get();
+    
+        return response()->json($totals);
+    }
+    
 
     public function update(Request $request, Transaction $transaction)
     {

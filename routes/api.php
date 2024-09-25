@@ -8,4 +8,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('transactions', TransactionController::class);
+// Always before apiResource
+Route::get('transactions/by-currency', [TransactionController::class, 'getTotalsByCurrency']);
+Route::get('transactions/test', function () {    return response()->json(['message' => 'Teste de rota funcionando!']);});
+
+Route::apiResource('transactions', TransactionController::class);    
