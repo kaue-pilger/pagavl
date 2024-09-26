@@ -11,6 +11,5 @@ Route::get('/user', function (Request $request) {
 // Always before apiResource
 Route::get('transactions/by-currency', [TransactionController::class, 'getTotalsByCurrency']);
 Route::get('transactions/by-payment-methods', [TransactionController::class, 'getTotalsByPaymentMethods']);
-Route::get('transactions/all-amounts', [TransactionController::class, 'getAllAmounts']);
 
 Route::apiResource('transactions', TransactionController::class);    

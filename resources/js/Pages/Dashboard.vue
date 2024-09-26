@@ -9,14 +9,25 @@
 
   const totalsByCurrency = ref([]);
   const totalsByPaymentMethods = ref([]);
-  const amounts = ref([]);
-
   const totalTransactions = ref(0);
+  const total = ref(0);
+  const exchange = ref(1);
+  const totalWithExchange = ref(0);
 
   const calculateTotal = () => {
-    totalTransactions.value = Object.values(totalsByPaymentMethods.value).reduce((total, amount) => {
-      return total + amount;
+    totalTransactions.value = Object.values(totalsByPaymentMethods.value).reduce((accumulator, currentValue) => {
+      return accumulator + currentValue;
     }, 0);
+  };
+
+  const calculateTotalWithExchange = (currenciesArray) => {
+    total.value = 0; // Reset the total before each calculation
+
+    currenciesArray.value.forEach((currencyObj) => {
+      total.value += parseInt(currencyObj.total); // Access the Object value with .value
+    });
+
+    totalWithExchange.value = total.value * exchange.value;
   };
 
   const paymentMethodNames = {
@@ -39,32 +50,22 @@
     return currencyFlags[currency] || "Unknown Currency";
   };
 
-  onMounted(() => {
-    axios.get('/api/transactions/by-currency')
-      .then(response => {
-        totalsByCurrency.value = response.data;
-      })
-      .catch(error => {
-        console.error('Error trying to get API response:', error);
-      });
+  onMounted(async () => {
+    try {
+      const [currencyResponse, paymentMethodsResponse] = await Promise.all([
+        axios.get('/api/transactions/by-currency'),
+        axios.get('/api/transactions/by-payment-methods')
+      ]);
 
-    axios.get('/api/transactions/by-payment-methods')
-      .then(response => {
-        totalsByPaymentMethods.value = response.data;
+      totalsByCurrency.value = currencyResponse.data;
+      calculateTotalWithExchange(totalsByCurrency);
 
-        calculateTotal()
-      })
-      .catch(error => {
-        console.error('Error trying to get API response:', error);
-      });
+      totalsByPaymentMethods.value = paymentMethodsResponse.data;
+      calculateTotal();
 
-    axios.get('/api/transactions/all-amounts')
-      .then(response => {
-        amounts.value = response.data.map(item => item.amounts);
-      })
-      .catch(error => {
-        console.error('Error trying to get API response:', error);
-      });
+    } catch (error) {
+      console.error('Error trying to get API response:', error);
+    }
   });
 </script>
 
@@ -96,14 +97,12 @@
             </span>
           </Dash>
           <Dash 
-            :dash-title="'Total Amount of Transactions'"
+            :dash-title="'Total Value of Transactions'"
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
-            <ul>
-              <li class="text-2xl" v-for="(amount, index) in amounts" :key="index">
-                {{ amount }}
-              </li>
-            </ul>
+            <span class="text-2xl">
+              {{ totalWithExchange }}
+            </span>
           </Dash>
         </div>
         <div class="flex flex-row w-full gap-4">
@@ -112,7 +111,7 @@
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
             <span class="text-2xl">
-              {{ Math.round(amounts / totalTransactions) }}
+              {{ Math.round(totalWithExchange / totalTransactions) }}
             </span>
           </Dash>
           <Dash 
