@@ -4,7 +4,7 @@
 
 This project is a simple authentication and transaction management dashboard developed for Payabl clients. It allows users to log in and view their transaction data, create test transactions, and explore all transactions through a user-friendly interface.
 
-![image](storage/app/private/pagavl.png)
+![image](docs/pagavl.png)
 
 ## Features
 
