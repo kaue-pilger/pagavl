@@ -112,7 +112,7 @@
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
             <span class="text-2xl">
-              {{ amounts / totalTransactions }}
+              {{ Math.round(amounts / totalTransactions) }}
             </span>
           </Dash>
           <Dash 

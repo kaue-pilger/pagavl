@@ -3,8 +3,9 @@
 import Sidebar from '@/Components/Sidebar.vue';
 
 const links = [
-  { id: 1, name: 'Get Started', url: 'transactions' },
+  { id: 1, name: 'Get Started', url: 'get-started' },
   { id: 2, name: 'Dashboard', url: 'dashboard' },
+  { id: 3, name: 'Transactions', url: 'transactions' },
 ];
 
 </script>

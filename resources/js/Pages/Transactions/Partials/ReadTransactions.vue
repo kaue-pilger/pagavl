@@ -8,7 +8,6 @@
 
 <template>
   <div>
-      <h2>Lista de Transações</h2>
       <table>
           <thead>
               <tr>
@@ -18,7 +17,7 @@
                   <th>Amount</th>
                   <th>Currency</th>
                   <th>Payment Method</th>
-                  <th>Actions</th>
+                  <!-- <th>Actions</th> -->
               </tr>
           </thead>
           <tbody>
@@ -29,10 +28,10 @@
                   <td>{{ transaction.amount }}</td>
                   <td>{{ transaction.currency }}</td>
                   <td>{{ transaction.payment_method }}</td>
-                  <td>
+                  <!-- <td>
                       <button @click="$emit('edit', transaction.id)">Editar</button>
                       <button @click="$emit('delete', transaction.id)">Excluir</button>
-                  </td>
+                  </td> -->
               </tr>
           </tbody>
       </table>
