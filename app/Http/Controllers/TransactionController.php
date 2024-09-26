@@ -41,6 +41,24 @@ class TransactionController extends Controller
     
         return response()->json($totals);
     }
+
+    public function getAllAmounts()
+    {
+        $amounts = Transaction::select(DB::raw('SUM(amount) as amounts'))
+            ->get();
+    
+        return $amounts;
+    }
+
+    public function getTotalsByPaymentMethods()
+    {
+        $payment_methods = Transaction::select('payment_method', DB::raw('COUNT(*) as total'))
+            ->groupBy('payment_method')
+            ->get()
+            ->pluck('total', 'payment_method'); // Pluck to create the key-value format
+        
+        return response()->json($payment_methods);
+    }
     
 
     public function update(Request $request, Transaction $transaction)
