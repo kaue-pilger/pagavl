@@ -16,9 +16,9 @@
 <template>
   <aside class="flex flex-col h-full p-8 bg-daintree">
     <div class="shrink-0 flex items-center">
-      <Link :href="route('dashboard')">
+      <a href="/">
         <ApplicationLogo class="block h-9 w-auto" />
-      </Link>
+      </a>
     </div>
     <ul class="flex flex-col flex-grow mt-8 gap-4">
       <li class="flex items-center hover:bg-te-papa-green hover:text-white h-10 w-full rounded-xl" v-for="link in links" :key="link.id">
