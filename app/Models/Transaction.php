@@ -12,13 +12,13 @@ class Transaction extends Model
 
   protected $fillable = ['amount', 'currency', 'payment_method', 'merchant_id', 'order_id', 'date'];
 
-  public static function getTotalsByCurrency()
+  public static function getTotalsByCurrencies()
   {
-    $totalsByCurrency = Transaction::select('currency', DB::raw('SUM(amount) as total'))
+    $totalsByCurrencies = Transaction::select('currency', DB::raw('SUM(amount) as total'))
       ->groupBy('currency')
       ->get();
 
-    return $totalsByCurrency;
+    return $totalsByCurrencies;
   }
   
   public static function getTotalsByPaymentMethods()

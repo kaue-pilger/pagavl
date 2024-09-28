@@ -9,7 +9,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Always before apiResource
-Route::get('transactions/by-currency', [TransactionController::class, 'getTotalsByCurrency']);
-Route::get('transactions/by-payment-methods', [TransactionController::class, 'getTotalsByPaymentMethods']);
+Route::get('transactions/by/currencies', [TransactionController::class, 'getTotalsByCurrencies']);
+Route::get('transactions/by/payment-methods', [TransactionController::class, 'getTotalsByPaymentMethods']);
 
 Route::apiResource('transactions', TransactionController::class);    

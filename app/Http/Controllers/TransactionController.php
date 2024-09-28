@@ -63,10 +63,10 @@ class TransactionController extends Controller
     return response()->json(null, status: 204);
   }
 
-  public function getTotalsByCurrency()
+  public function getTotalsByCurrencies()
   {
     try {
-      return response()->json(Transaction::getTotalsByCurrency());
+      return response()->json(Transaction::getTotalsByCurrencies());
     } 
     catch (\Exception $e) 
     {
