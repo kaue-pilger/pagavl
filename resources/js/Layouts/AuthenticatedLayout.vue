@@ -18,7 +18,7 @@ const links = [
     </div>
 
     <!-- Main content occupies the remaining 3/4 -->
-    <div class="w-3/4 bg-white p-8">
+    <div class="w-3/4 bg-white">
       <slot />
     </div>
   </div>

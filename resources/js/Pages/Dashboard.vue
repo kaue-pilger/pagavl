@@ -14,6 +14,7 @@
   const totalWithExchange = ref(0);
   const exchangeRates = ref(1);
   const currencyToExchange = ref('EUR');
+  const isLoading = ref(true);
 
 const handleCurrencyChange = async (event) => {
   currencyToExchange.value = event.target.value;
@@ -25,6 +26,8 @@ const handleCurrencyChange = async (event) => {
     calculateTotalWithExchange(totalsByCurrencies);
   } catch (error) {
     console.error('Error trying to get API response on currency update:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -83,6 +86,8 @@ const handleCurrencyChange = async (event) => {
 
     } catch (error) {
       console.error('Error trying to get API response:', error);
+    } finally {
+      isLoading.value = false;
     }
   });
 </script>
@@ -95,9 +100,15 @@ const handleCurrencyChange = async (event) => {
       <h1 class="text-4xl text-daintree font-bold">All accounts</h1>
       <div class="flex flex-col mt-6">
         <span class="oslo-gray">Available balances</span>
-        <div class="flex flex-row gap-8 mt-2">
+        <div v-if="isLoading" class="flex flex-row gap-8 mt-2 animate-pulse">
+          <div v-for="n in 3" :key="n" class="flex flex-row justify-center items-center gap-4">
+            <div class="rounded-full bg-iron h-10 w-10"></div>
+            <div class="rounded-xl bg-iron h-8 w-32" />
+          </div>
+        </div>
+        <div v-else class="flex flex-row gap-8 mt-2">
           <div class="flex flex-row justify-center items-center text-center gap-4" v-for="(totalByCurrency, index) in totalsByCurrencies" :key="index">
-            <img class="w-10 h-10 rounded-full" :src="getCurrencyFlag(totalByCurrency.currency)" alt="Currency Flag">
+            <img class="h-10 w-10 rounded-full" :src="getCurrencyFlag(totalByCurrency.currency)" alt="Currency Flag">
             <h4>{{ totalByCurrency.currency }}</h4>
             <h4>{{ totalByCurrency.total }}</h4>
           </div>
@@ -110,7 +121,10 @@ const handleCurrencyChange = async (event) => {
             :dash-title="'Total of Transactions'"
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
-            <span class="text-2xl">
+            <div v-if="isLoading" class="animate-pulse">
+              <div class="h-8 bg-iron rounded-xl w-full" />
+            </div>
+            <span v-else class="text-2xl">
               {{ totalTransactions }}
             </span>
           </Dash>
@@ -118,7 +132,10 @@ const handleCurrencyChange = async (event) => {
             :dash-title="'Total Value of Transactions in ' + currencyToExchange"
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
-            <div class="flex flex-row gap-4">              
+            <div v-if="isLoading" class="animate-pulse">
+              <div class="h-8 bg-iron rounded-xl w-full" />
+            </div>
+            <div v-else class="flex flex-row gap-4">              
               <span class="text-2xl">
                 {{ totalWithExchange.toFixed(2) }}
               </span>
@@ -140,7 +157,10 @@ const handleCurrencyChange = async (event) => {
             :dash-title="'Average Ticket in ' + currencyToExchange"
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
-            <span class="text-2xl">
+            <div v-if="isLoading" class="animate-pulse">
+              <div class="h-8 bg-iron rounded-xl w-full" />
+            </div>
+            <span v-else class="text-2xl">
               {{ (totalWithExchange / totalTransactions).toFixed(2) }}
             </span>
           </Dash>
@@ -148,7 +168,10 @@ const handleCurrencyChange = async (event) => {
             :dash-title="'Goal Achieved'"
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
-            <span class="text-2xl">
+            <div v-if="isLoading" class="animate-pulse">
+              <div class="h-8 bg-iron rounded-xl w-full" />
+            </div>
+            <span v-else class="text-2xl">
               8%
             </span>
           </Dash>
@@ -158,7 +181,10 @@ const handleCurrencyChange = async (event) => {
             :dash-title="'Total of Transactions per Payment Method'"
             :dash-subtitle="'Lorem ipsum dolorrem ipsum um dolor.'"
           > 
-            <ul class="flex flex-row gap-2">
+            <div v-if="isLoading" class="animate-pulse">
+              <div class="h-8 bg-iron rounded-xl w-full" />
+            </div>
+            <ul v-else class="flex flex-row gap-2">
               <li v-for="(total, method) in totalsByPaymentMethods" :key="method">
                 {{ getPaymentMethodName(method) }}: {{ total }}
               </li>

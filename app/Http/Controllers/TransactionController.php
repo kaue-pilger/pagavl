@@ -49,19 +49,15 @@ class TransactionController extends Controller
     return response()->json($transactionById);
   }  
 
-  public function update(Request $request, Transaction $transaction)
-  {
-    $transaction->update($request->all());
+  // Blocked because a transaction should not have an update or destroy method
 
-    return response()->json($transaction);
-  }
+  // public function update(Request $request, Transaction $transaction)
+  // { $transaction->update($request->all());
+  //   return response()->json($transaction); }
 
-  public function destroy(Transaction $transaction)
-  {
-    $transaction->delete();
-
-    return response()->json(null, status: 204);
-  }
+  // public function destroy(Transaction $transaction)
+  // { $transaction->delete();
+  //   return response()->json(null, status: 204);}
 
   public function getTotalsByCurrencies()
   {

@@ -17,7 +17,8 @@ export default {
             'algae-gree': '#7CDDAE',
             'oslo-gray': '#7B8B8F',
             'black-haze': '#F7F8F8',
-            'white': '#FFFFFF'
+            'white': '#FFFFFF',
+            'iron': '#E3E4E4'
         },
         extend: {
             fontFamily: {
